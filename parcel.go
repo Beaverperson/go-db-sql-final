@@ -67,6 +67,11 @@ func (s ParcelStore) GetByClient(client int) ([]Parcel, error) {
 		}
 		res = append(res, bufferPars)
 	}
+	err = rows.Err()
+	if err != nil {
+		fmt.Printf("error after rows iteration for client (%d) from DB\n%v", client, err)
+		return nil, err
+	}
 	return res, nil
 }
 
@@ -82,18 +87,10 @@ func (s ParcelStore) SetStatus(number int, status string) error {
 }
 
 func (s ParcelStore) SetAddress(number int, address string) error {
-	targetParcel, err := s.Get(number)
-	if err != nil {
-		// дебажное кукареку в консоль реализовано в методе GET структуры ParcelStore
-		return err
-	}
-	if targetParcel.Status != ParcelStatusRegistered {
-		fmt.Printf("attempt to change address for sent/delivered parcel number: %d\n", number)
-		return fmt.Errorf("attempt to change address for sent/delivered parcel number: %d\n", number)
-	}
-	_, err = s.db.Exec(`UPDATE parcel SET address = :address WHERE number = :number`,
+	_, err := s.db.Exec("UPDATE parcel SET address = :address WHERE number = :number AND status = :status",
 		sql.Named("address", address),
-		sql.Named("number", number))
+		sql.Named("number", number),
+		sql.Named("status", ParcelStatusRegistered))
 	if err != nil {
 		fmt.Printf("error while setting new addres for parcel(%d)\n%v", number, err)
 		return err

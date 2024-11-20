@@ -53,6 +53,7 @@ func TestAddGetDelete(t *testing.T) {
 	require.NoError(t, err)
 	_, err = store.Get(number)
 	require.Error(t, err)
+	defer db.Close()
 }
 
 // TestSetAddress проверяет обновление адреса
@@ -75,6 +76,7 @@ func TestSetAddress(t *testing.T) {
 	targetParcel, err := store.Get(number)
 	require.NoError(t, err)
 	require.Equal(t, newAddress, targetParcel.Address)
+	defer db.Close()
 }
 
 // TestSetStatus проверяет обновление статуса
@@ -98,6 +100,7 @@ func TestSetStatus(t *testing.T) {
 	targetParcel, err := store.Get(number)
 	require.NoError(t, err)
 	require.Equal(t, newStatus, targetParcel.Status)
+	defer db.Close()
 }
 
 // TestGetByClient проверяет получение посылок по идентификатору клиента
@@ -142,4 +145,5 @@ func TestGetByClient(t *testing.T) {
 		targetParcel.Number = parcel.Number
 		require.Equal(t, parcel, targetParcel)
 	}
+	defer db.Close()
 }
