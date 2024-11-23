@@ -75,7 +75,7 @@ func TestSetAddress(t *testing.T) {
 	// check
 	targetParcel, err := store.Get(number)
 	require.NoError(t, err)
-	require.Equal(t, targetParcel.Address, newAddress)
+	require.Equal(t, newAddress, targetParcel.Address)
 	defer db.Close()
 }
 
@@ -99,7 +99,7 @@ func TestSetStatus(t *testing.T) {
 	// check
 	targetParcel, err := store.Get(number)
 	require.NoError(t, err)
-	require.Equal(t, targetParcel.Status, newStatus)
+	require.Equal(t, newStatus, targetParcel.Status)
 	defer db.Close()
 }
 
@@ -143,7 +143,7 @@ func TestGetByClient(t *testing.T) {
 		targetParcel, inMap := parcelMap[parcel.Number]
 		require.True(t, inMap)
 		targetParcel.Number = parcel.Number
-		require.Equal(t, targetParcel, parcel)
+		require.Equal(t, parcel, targetParcel)
 	}
 	defer db.Close()
 }
