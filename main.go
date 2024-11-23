@@ -141,7 +141,7 @@ func main() {
 	err = service.Delete(p.Number)
 	if err != nil {
 		fmt.Println(err)
-		//return
+		return
 	}
 
 	// вывод посылок клиента
@@ -149,21 +149,21 @@ func main() {
 	err = service.PrintClientParcels(client)
 	if err != nil {
 		fmt.Println(err)
-		//return
+		return
 	}
 
 	// регистрация новой посылки
 	p, err = service.Register(client, address)
 	if err != nil {
 		fmt.Println(err)
-		//return
+		return
 	}
 
 	// удаление новой посылки
 	err = service.Delete(p.Number)
 	if err != nil {
 		fmt.Println(err)
-		//return
+		return
 	}
 
 	// вывод посылок клиента
@@ -171,6 +171,6 @@ func main() {
 	err = service.PrintClientParcels(client)
 	if err != nil {
 		fmt.Println(err)
-		//return
+		return
 	}
 }
