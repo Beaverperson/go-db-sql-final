@@ -17,7 +17,9 @@ jobs:
       name: Push Docker image to Docker Hub
       runs-on: ubuntu-latest
       needs: test
-      if: contains(github.ref, "release")
+      if: contains('
+        refs/heads/docker
+        ', github.ref)
       steps:
         - name: Checkout
           uses: actions/checkout@v4
