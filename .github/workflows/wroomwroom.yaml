@@ -19,6 +19,7 @@ jobs:
       needs: test
       if: contains('
         refs/heads/docker
+        refs/heads/lookatmydocker
         ', github.ref)
       steps:
         - name: Checkout
